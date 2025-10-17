@@ -1,0 +1,30 @@
+@model Jorfofbasket.Models.Partner
+
+<h2>Ajouter un Partenaire</h2>
+
+<form asp-action="Create" enctype="multipart/form-data" method="post">
+    <div>
+        <label asp-for="TitleFr"></label>
+        <input asp-for="TitleFr" />
+        <span asp-validation-for="TitleFr"></span>
+    </div>
+    <div>
+        <label asp-for="TitleEn"></label>
+        <input asp-for="TitleEn" />
+        <span asp-validation-for="TitleEn"></span>
+    </div>
+    <div>
+        <label asp-for="Country"></label>
+        <input asp-for="Country" />
+        <span asp-validation-for="Country"></span>
+    </div>
+    <div>
+        <label>Photo</label>
+        <input type="file" name="Photo" />
+    </div>
+    <button type="submit">Ajouter</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

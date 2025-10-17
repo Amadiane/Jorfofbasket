@@ -1,0 +1,23 @@
+@model IEnumerable<Jorfofbasket.Models.ContactMessage>
+
+<h2>Messages des clients</h2>
+
+<table border="1" cellpadding="8" cellspacing="0">
+    <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Sujet</th>
+        <th>Message</th>
+        <th>Date</th>
+    </tr>
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.Name</td>
+        <td>@item.Email</td>
+        <td>@item.Subject</td>
+        <td>@item.Message</td>
+        <td>@item.CreatedAt.ToString("g")</td>
+    </tr>
+}
+</table>

@@ -1,0 +1,797 @@
+@{
+    ViewData["Title"] = ViewData["Title"] ?? "Jorfof Basket Club";
+}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - Jorfof Basket</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <link rel="stylesheet" href="~/css/app.css" /> -->
+    @RenderSection("Styles", required: false)
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        /* ============ TOP HEADER (LOGO, DATE, LANGUE) ============ */
+        .top-header {
+        background-color: #fff;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        flex-wrap: wrap;
+        }
+
+        .top-header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .top-header-left img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .top-header-center {
+            flex: 1;
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        #currentDate {
+        font-size: 24px;      /* augmente la taille du texte */
+        font-weight: bold;    /* rend le texte plus visible */
+        color: #222;          /* couleur du texte */
+        }
+
+        .top-header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .lang-select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: white;
+            transition: border-color 0.3s ease;
+        }
+
+        .lang-select:hover {
+            border-color: #667eea;
+        }
+
+        .presentation-btn {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .presentation-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* ============ SEARCH BAR ============ */
+        .search-container {
+            background-color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: center;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 40px 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .search-result-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .search-result-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        /* ============ MAIN HEADER (NAV) ============ */
+        header.main-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .header-container h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px; Espace en bas des écritures
+            align-items: center;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 22px; /* agrandir le texte des liens */
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 12px; /* padding autour du lien */
+        }
+
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ffd700;
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* ============ MAIN CONTENT ============ */
+        main {
+            flex: 1;
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            background-color: white;
+            border-radius: 8px;
+            margin: 30px auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        /* ============ FOOTER ============ */
+        footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ecf0f1;
+            padding: 50px 20px 0;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+
+        .footer-section h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .footer-section ul li a {
+            color: #ecf0f1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #ffd700;
+        }
+
+        .footer-divider {
+            height: 1px;
+            background: rgba(255, 215, 0, 0.2);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #95a5a6;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @@media (max-width: 768px) {
+            .top-header {
+                padding: 12px 20px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .top-header-left img {
+                height: 40px;
+            }
+
+            .top-header-center {
+                width: 100%;
+                order: 3;
+                font-size: 12px;
+            }
+
+            .top-header-right {
+                gap: 10px;
+                font-size: 12px;
+            }
+
+            .search-container {
+                padding: 12px 20px;
+            }
+
+            .search-wrapper {
+                max-width: 100%;
+            }
+
+            .header-container {
+                padding: 15px 20px;
+            }
+
+            .header-container h1 {
+                font-size: 22px;
+                
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            nav.active {
+                display: flex;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            main {
+                padding: 20px 15px;
+                margin: 20px auto;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 0 15px;
+                margin: 0 auto 30px;
+            }
+
+            footer {
+                padding: 30px 15px 0;
+            }
+        }
+
+        @@media (max-width: 480px) {
+            .top-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .top-header-left img {
+                height: 35px;
+            }
+
+            .top-header-center {
+                width: 100%;
+                font-size: 11px;
+            }
+
+            .top-header-right {
+                width: 100%;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .presentation-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .lang-select {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+
+            .search-container {
+                padding: 10px 15px;
+            }
+
+            .search-input {
+                padding: 10px 35px 10px 12px;
+                font-size: 13px;
+            }
+
+            .header-container h1 {
+                font-size: 18px;
+                font-size: 14px;
+                color: #555;
+                font-weight: 500;
+                }
+
+            .header-container {
+                padding: 12px 15px;
+            }
+
+            nav ul {
+                gap: 10px;
+            }
+
+            nav ul li a {
+                font-size: 14px;
+            }
+
+            main {
+                padding: 15px 10px;
+                margin: 15px auto;
+            }
+
+            .footer-section h4 {
+                font-size: 16px;
+            }
+
+            .footer-section ul li {
+                font-size: 13px;
+            }
+
+            .footer-bottom {
+                font-size: 12px;
+            }
+
+            .footer-container {
+                gap: 20px;
+                padding: 0 10px;
+            }
+        }
+
+
+                /* Flèche déjà présente mais on améliore son style */
+        /* ============ DROPDOWN MENU ============ */
+        .dropdown {
+            position: relative;
+            height: 100%;
+        }
+
+        .dropdown > a::after {
+            /* content: '▼'; */
+            font-size: 10px;
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* .dropdown:hover > a::after {
+            transform: rotate(180deg);
+        } */
+
+        .dropdown-menu {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+            border-radius: 0 0 8px 8px;
+            min-width: 170px;
+            z-index: 1000;
+            padding: 8px 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            margin-top: 0;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: flex;
+        }
+
+        .dropdown-menu li {
+            margin: 0;
+            height: auto;
+        }
+
+        .dropdown-menu li a {
+            color: black;
+            padding: 10px 16px;
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            height: auto;
+            letter-spacing: 0.2px;
+        }
+
+        .dropdown-menu li a::after {
+            content: '';
+            display: none;
+        }
+
+        .dropdown-menu li a::before {
+            content: '';
+            display: none;
+        }
+
+        .dropdown-menu li a:hover {
+            /* background-color: rgba(255, 215, 0, 0.15); */
+            background: white;
+            /* color: #ffd700; */
+            padding-left: 26px;
+        }
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    </style>
+</head>
+<body>
+
+
+    <!-- ============ TOP HEADER (LOGO, DATE, LANGUE, BOUTON) ============ -->
+    <div class="top-header">
+        <div class="top-header-left">
+            <img src="~/images/logo.jpg" alt="Logo Jorfof Basket" />
+            <!-- <h1> Jorfof Basket </h1> -->
+            <span class="club-name">JORFOF BASKET</span>
+        </div>
+        
+        <div class="top-header-center">
+            <span id="currentDate"></span>
+        </div>
+        <div class="top-header-right">
+            <a href="/Club/Presentation" class="presentation-btn">Présentation 🎬</a>
+            <!-- ============ SEARCH BAR ============ -->
+        <div class="search-container" class="search-wrapper">
+            <input 
+                type="text" 
+                class="search-input" 
+                id="searchInput" 
+                placeholder="Rechercher équipes, joueurs, actualités..."
+                autocomplete="off"
+            />
+            <!-- <span class="search-icon">🔍</span> -->
+            <!-- <div class="search-results" id="searchResults"></div> -->
+        </div>
+            <select class="lang-select" onchange="changeLanguage(this.value)">
+                <option value="fr" selected>Français</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+    </div>
+    <!-- ============ MAIN HEADER (NAVIGATION) ============ -->
+    <header class="main-header">
+        <div class="header-container">
+            <!-- <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div> -->
+            <nav id="nav">
+                <ul>
+                    <li><a href="/">Accueil</a></li>
+                    <li class="dropdown">
+                        <a href="/Club">Le Club ˅ </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Club/President">Mot du Président</a></li>
+                            <li><a href="/Club">Jorfof Basket Club</a></li>
+                            <li><a href="/Club/Valeurs">Nos valeurs</a></li>
+                            <li><a href="/Club/Missions">Nos missions</a></li>
+                            <li><a href="/Club/Equipe">Notre équipe</a></li>
+                        </ul>
+                    </li>
+                    <!-- <li><a href="/Equipes">Nos Équipes</a></li> -->
+                    <li><a href="/Actualites">Actualités</a></li>
+                    <li><a href="/Resultats">Résultats & Calendrier</a></li>
+                    <li class="dropdown">
+                        <a href="/Galerie">Galerie ˅</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Galerie/Phototheque">Photothèque</a></li>
+                            <li><a href="/Galerie/Videotheque">Vidéothèque</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/Index">Partenaires</a></li>
+                    <li class="dropdown">
+                        <a href="/Contact">Contact ˅</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Contact">Contactez-nous</a></li>
+                            <li><a href="/Contact/Communaute">Rejoignez-nous</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ============ MAIN CONTENT ============ -->
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>📞 Contact</h4>
+                <ul>
+                    <li><strong>Email:</strong> contact@jorfofbasket.com</li>
+                    <li><strong>Téléphone:</strong> 00 224 626 74 14 78</li>
+                    <li><strong>Adresse:</strong> Conakry, Guinée</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>🤝 Partenaires</h4>
+                <ul>
+                    <li><a href="#">Tekacom </a></li>
+                    <li><a href="#">Rahi travels</a></li>
+                    <li><a href="#">Federation GUINEENNE de basketball</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>🔗 Liens Utiles</h4>
+                <ul>
+                    <li><a href="/">Accueil</a></li>
+                    <li><a href="/Actualites">Actualités</a></li>
+                    <li><a href="/Contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>🏆 À Propos</h4>
+                <ul>
+                    <li>Fondé en ???</li>
+                    <li>Basé à Conakry, Guinée</li>
+                    <li>Club de basketball professionnel</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-divider"></div>
+        <div class="footer-bottom">
+            &copy; 2025 Jorfof Basket Club. Tous droits réservés. | Mentions légales
+        </div>
+    </footer>
+
+    <script>
+        // Afficher la date du jour
+        function displayDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const today = new Date();
+            const formattedDate = today.toLocaleDateString('fr-FR', options);
+            document.getElementById('currentDate').textContent = formattedDate;
+        }
+
+        // Initialiser la date
+        displayDate();
+
+        // Hamburger menu
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+
+        hamburger.addEventListener('click', function() {
+            nav.classList.toggle('active');
+        });
+
+        // Fermer le menu lors du clic sur un lien
+        document.querySelectorAll('nav a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                nav.classList.remove('active');
+            });
+        });
+
+        // Recherche dynamique
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        // Données de recherche (remplacer par API réelle)
+        const searchData = [
+            { title: 'Équipe Senior', url: '/Equipes/Senior' },
+            { title: 'Équipe Junior', url: '/Equipes/Junior' },
+            { title: 'Joueur: Amadou Diallo', url: '/Joueurs/1' },
+            { title: 'Match: Jorfof vs Kindia', url: '/Resultats/1' },
+            { title: 'Actualité: Victoire 85-78', url: '/Actualites/1' },
+            { title: 'Galerie Photos 2024', url: '/Galerie' },
+            { title: 'Partenaire: Nike', url: '/Partenaires/1' },
+            { title: 'Calendrier Juin 2025', url: '/Resultats' }
+        ];
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+
+            if (query.length < 2) {
+                searchResults.classList.remove('active');
+                return;
+            }
+
+            const filtered = searchData.filter(item =>
+                item.title.toLowerCase().includes(query)
+            );
+
+            if (filtered.length === 0) {
+                searchResults.innerHTML = '<div class="search-result-item">Aucun résultat trouvé</div>';
+                searchResults.classList.add('active');
+                return;
+            }
+
+            searchResults.innerHTML = filtered.map(item =>
+                `<a href="${item.url}" class="search-result-item" style="text-decoration: none; color: inherit; display: block;">${item.title}</a>`
+            ).join('');
+
+            searchResults.classList.add('active');
+        });
+
+        // Fermer les résultats de recherche au clic ailleurs
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-wrapper')) {
+                searchResults.classList.remove('active');
+            }
+        });
+
+        function changeLanguage(lang) {
+            // À implémenter selon votre système multilingue
+            console.log('Langue changée en: ' + lang);
+        }
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

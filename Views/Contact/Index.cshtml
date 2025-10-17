@@ -1,0 +1,44 @@
+@model Jorfofbasket.Models.ContactMessage
+
+<h2>Contactez-nous</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div style="color: green; font-weight:bold; margin-bottom:10px;">
+        @TempData["Message"]
+    </div>
+}
+
+<form asp-action="Index" method="post">
+    @Html.AntiForgeryToken()  <!-- ✅ important pour éviter l’erreur 400 -->
+
+    <div>
+        <label>Nom :</label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name" style="color:red"></span>
+    </div>
+
+    <div>
+        <label>Email :</label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email" style="color:red"></span>
+    </div>
+
+    <div>
+        <label>Sujet :</label>
+        <input asp-for="Subject" />
+        <span asp-validation-for="Subject" style="color:red"></span>
+    </div>
+
+    <div>
+        <label>Message :</label>
+        <textarea asp-for="Message"></textarea>
+        <span asp-validation-for="Message" style="color:red"></span>
+    </div>
+
+    <button type="submit">Envoyer</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

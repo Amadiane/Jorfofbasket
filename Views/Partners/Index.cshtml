@@ -1,0 +1,27 @@
+@model IEnumerable<Jorfofbasket.Models.Partner>
+
+<h2>Nos Partenaires</h2>
+
+<div class="partners-grid">
+    @foreach (var p in Model)
+    {
+        <div class="partner-card">
+            <img src="@p.PhotoPath" alt="@p.TitleFr" class="partner-photo"/>
+            <h3 class="partner-title">@p.TitleFr</h3>
+            <h3 class="partner-title-en">@p.TitleEn</h3>
+            <p class="partner-country">@p.Country</p>
+        </div>
+    }
+</div>
+
+<style>
+.partners-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+.partner-card { background: white; padding: 15px; border-radius: 8px; text-align:center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);}
+.partner-photo { width: 100%; height:150px; object-fit:contain; margin-bottom:10px; }
+.partner-title, .partner-title-en { font-weight:bold; margin-bottom:5px; }
+.partner-country { font-size:14px; color:#555; }
+</style>
