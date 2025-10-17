@@ -1,0 +1,43 @@
+@model IEnumerable<Jorfofbasket.Models.Match>
+@{
+    ViewData["Title"] = "Liste des matchs";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-3 text-center">📅 Liste des matchs</h2>
+
+    <div class="text-end mb-3">
+        <!-- <a class="btn btn-primary" asp-action="Create">➕ Ajouter un match</a> -->
+        <a class="btn btn-primary" asp-controller="Match" asp-action="Create">➕ Ajouter un match</a>
+    </div>
+
+    <table class="table table-striped table-hover text-center">
+        <thead class="table-dark">
+            <tr>
+                <th>Équipe adverse</th>
+                <th>Date du match</th>
+                <th>Lieu</th>
+                <th>Score (local - adverse)</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.EquipeAdverse</td>
+                    <td>@item.DateMatch.ToString("dd/MM/yyyy")</td>
+                    <td>@item.Lieu</td>
+                    <td>@($"{item.ScoreEquipe ?? 0} - {item.ScoreAdverse ?? 0}")</td>
+                    <td>@item.Statut</td>
+                    <td>
+                        <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@item.Id">👁️ Détails</a>
+                        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">✏️ Modifier</a>
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">🗑️ Supprimer</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,33 @@
+@model Jorfofbasket.Models.Match
+@{
+    ViewData["Title"] = "Détails du match";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">👁️ Détails du match</h2>
+
+    <dl class="row mx-auto" style="max-width:600px;">
+        <dt class="col-sm-4">Équipe adverse</dt>
+        <dd class="col-sm-8">@Model.EquipeAdverse</dd>
+
+        <dt class="col-sm-4">Date</dt>
+        <dd class="col-sm-8">@Model.DateMatch.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-4">Lieu</dt>
+        <dd class="col-sm-8">@Model.Lieu</dd>
+
+        <dt class="col-sm-4">Score local</dt>
+        <dd class="col-sm-8">@Model.ScoreEquipe</dd>
+
+        <dt class="col-sm-4">Score adverse</dt>
+        <dd class="col-sm-8">@Model.ScoreAdverse</dd>
+
+        <dt class="col-sm-4">Statut</dt>
+        <dd class="col-sm-8">@Model.Statut</dd>
+    </dl>
+
+    <div class="text-center">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">✏️ Modifier</a>
+        <a asp-action="Index" class="btn btn-secondary ms-2">↩️ Retour</a>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+@model Jorfofbasket.Models.Match
+@{
+    ViewData["Title"] = "Supprimer le match";
+}
+
+<div class="container mt-4 text-center">
+    <h2 class="mb-4 text-danger">🗑️ Supprimer le match</h2>
+    <p>Êtes-vous sûr de vouloir supprimer le match contre <strong>@Model.EquipeAdverse</strong> prévu le <strong>@Model.DateMatch.ToString("dd/MM/yyyy")</strong> ?</p>
+
+    <form asp-action="DeleteConfirmed" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Oui, supprimer</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Annuler</a>
+    </form>
+</div>

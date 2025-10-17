@@ -18,138 +18,116 @@
     }
 
     body {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-        min-height: 100vh;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .dashboard-wrapper {
-        display: flex;
         min-height: 100vh;
     }
 
-    /* Sidebar */
+    .dashboard-wrapper { display: flex; min-height: 100vh; }
+
+    /* --- Sidebar --- */
     .sidebar {
         width: 260px;
         background: var(--white);
-        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
         position: fixed;
+        top: 0; left: 0;
         height: 100vh;
-        left: 0;
-        top: 0;
+        overflow-y: auto;
         transition: transform 0.3s ease;
         z-index: 1000;
-        overflow-y: auto;
     }
 
     .sidebar-header {
-        padding: 25px 20px;
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         color: var(--white);
         text-align: center;
+        padding: 25px 20px;
     }
 
-    .sidebar-header h2 { font-size: 20px; font-weight: 600; margin: 0 0 5px 0; }
-    .sidebar-header p { font-size: 12px; margin: 0; opacity: 0.9; }
+    .sidebar-header h2 { margin: 0; font-size: 20px; font-weight: 600; }
+    .sidebar-header p { margin: 0; font-size: 12px; opacity: 0.9; }
 
-    .sidebar-menu { padding: 20px 0; }
     .menu-item {
+        display: flex; align-items: center; gap: 12px;
         padding: 15px 25px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
         color: var(--text-dark);
         text-decoration: none;
-        transition: all 0.3s ease;
         border-left: 3px solid transparent;
+        transition: 0.3s;
         cursor: pointer;
     }
+
     .menu-item:hover, .menu-item.active {
         background: rgba(102, 126, 234, 0.1);
         border-left-color: var(--primary-color);
         color: var(--primary-color);
-        text-decoration: none;
     }
-    .menu-item i { font-size: 20px; width: 24px; }
 
-    /* Main Content */
+    .menu-item i { font-size: 20px; }
+
+    /* --- Main Content --- */
     .main-content {
         flex: 1;
         margin-left: 260px;
         padding: 30px;
-        transition: margin-left 0.3s ease;
     }
 
     .top-bar {
         background: var(--white);
         border-radius: 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         padding: 20px 25px;
         margin-bottom: 30px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        display: flex; justify-content: space-between; align-items: center;
     }
 
-    .page-title { display: flex; align-items: center; gap: 10px; font-size: 24px; color: var(--text-dark); font-weight: 600; margin: 0; }
-    .menu-toggle { display: none; background: var(--primary-color); color: var(--white); border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-size: 20px; }
+    .page-title { display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 600; color: var(--text-dark); }
+    .menu-toggle { display: none; background: var(--primary-color); color: white; border: none; border-radius: 8px; padding: 10px 15px; }
 
-    .content-card { background: var(--white); border-radius: 15px; padding: 30px; box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); display: none; }
+    /* --- Content Cards --- */
+    .content-card {
+        display: none;
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    }
+
     .content-card.active { display: block; }
 
     .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 25px;
-        padding-bottom: 15px;
+        display: flex; justify-content: space-between; align-items: center;
         border-bottom: 2px solid var(--light-bg);
+        padding-bottom: 15px;
+        margin-bottom: 20px;
     }
-    .card-header h3 { font-size: 20px; color: var(--text-dark); font-weight: 600; margin: 0; }
 
     .btn {
-        padding: 12px 24px;
+        padding: 10px 20px;
         border: none;
         border-radius: 8px;
         cursor: pointer;
-        font-size: 14px;
         font-weight: 500;
         text-decoration: none;
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        transition: all 0.3s ease;
     }
-    .btn-primary { background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: var(--white); }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); color: var(--white); text-decoration: none; }
-    .btn-warning { background: var(--warning-color); color: var(--text-dark); }
-    .btn-warning:hover { background: #e0a800; color: var(--text-dark); }
-    .btn-danger { background: var(--danger-color); color: var(--white); }
-    .btn-danger:hover { background: #c82333; color: var(--white); }
-    .btn-sm { padding: 8px 16px; font-size: 13px; }
+
+    .btn-primary { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102,126,234,0.4); }
 
     .table-responsive { overflow-x: auto; }
-    .custom-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    .custom-table thead { background: var(--light-bg); }
-    .custom-table th { padding: 15px; text-align: left; font-weight: 600; color: #555; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .custom-table td { padding: 15px; border-bottom: 1px solid var(--border-color); color: var(--text-muted); }
-    .custom-table tbody tr { transition: background 0.2s ease; }
-    .custom-table tbody tr:hover { background: var(--light-bg); }
-    .actions { display: flex; gap: 8px; }
+    .custom-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    .custom-table th, .custom-table td { padding: 12px; border-bottom: 1px solid var(--border-color); }
 
-    /* Responsive */
+    /* --- Responsive --- */
     @@media (max-width: 768px) {
         .sidebar { transform: translateX(-100%); }
         .sidebar.active { transform: translateX(0); }
         .main-content { margin-left: 0; }
         .menu-toggle { display: block; }
-        .top-bar { flex-direction: column; gap: 15px; align-items: flex-start; }
-        .content-card { padding: 20px; }
-        .card-header { flex-direction: column; gap: 15px; align-items: flex-start; }
-        .card-header a.btn { position: relative; z-index: 1010; }
-        .custom-table { font-size: 13px; }
-        .custom-table th, .custom-table td { padding: 10px; }
-        .actions { flex-direction: column; }
     }
 </style>
 
@@ -160,8 +138,11 @@
             <h2>🏀 Jorfof Basket</h2>
             <p>Administration</p>
         </div>
+
         <div class="sidebar-menu">
-            <a href="#" class="menu-item active" onclick="switchSection('matchs'); return false;">
+            <!-- <a href="#" class="menu-item active" onclick="switchSection('matchs'); return false;"> -->
+            <a href="#" class="menu-item active" onclick="switchSection(event, 'matchs'); return false;">
+
                 <i>🏀</i> <span>Matchs</span>
             </a>
             <a href="#" class="menu-item" onclick="switchSection('equipes'); return false;">
@@ -170,21 +151,15 @@
             <a href="#" class="menu-item" onclick="switchSection('joueurs'); return false;">
                 <i>⛹️</i> <span>Joueurs</span>
             </a>
-             <a href="@Url.Action("Phototheque", "Contact")" class="menu-item">
-            <i>📊</i> <span>Photothèque</span>
+            <a href="@Url.Action("Phototheque", "Contact")" class="menu-item">
+                <i>🖼️</i> <span>Photothèque</span>
             </a>
-            <!-- <a href="#" class="menu-item" onclick="switchSection('Message'); return false;">
-                <i>📊</i> <span>Contact</span>
-            </a> -->
             <a href="@Url.Action("Dashboard", "Contact")" class="menu-item">
-            <i>📊</i> <span>Contact</span>
+                <i>📞</i> <span>Contact</span>
             </a>
             <a href="@Url.Action("Partners", "Partners")" class="menu-item">
-            <i>📊</i> <span>Partners</span>
+                <i>🤝</i> <span>Partenaires</span>
             </a>
-
-        
-
             <a href="#" class="menu-item" onclick="switchSection('statistiques'); return false;">
                 <i>📊</i> <span>Statistiques</span>
             </a>
@@ -201,10 +176,44 @@
     <main class="main-content" id="mainContent">
         <div class="top-bar">
             <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-            <h1 class="page-title"><span>🏀</span> Tableau de bord – Jorfof Basket Club</h1>
+            <h1 class="page-title">🏀 Tableau de bord – Jorfof Basket Club</h1>
         </div>
 
-        
+        <!-- Section Matchs -->
+        <div class="content-card active" id="section-matchs">
+            <div class="card-header">
+                <h3>Gestion des Matchs</h3>
+                <!-- <a class="btn btn-primary" asp-controller="Match" asp-action="Create">➕ Ajouter un match</a> -->
+                <a class="btn btn-primary" href="/Match/Create">➕ Ajouter un match</a>
+            </div>
+            <div class="table-responsive">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Équipe</th>
+                            <th>Adversaire</th>
+                            <th>Date</th>
+                            <th>Score (local)</th>
+                            <th>Score (adverse)</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>JBC</td>
+                            <td>Raja Club</td>
+                            <td>12/11/2025</td>
+                            <td>78</td>
+                            <td>65</td>
+                            <td class="actions">
+                                <a href="#" class="btn btn-warning btn-sm">Modifier</a>
+                                <a href="#" class="btn btn-danger btn-sm">Supprimer</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
         <!-- Section Équipes -->
         <div class="content-card" id="section-equipes">
@@ -212,108 +221,41 @@
                 <h3>Gestion des Équipes</h3>
                 <a class="btn btn-primary" asp-controller="Equipe" asp-action="Create">➕ Ajouter une équipe</a>
             </div>
-            <p style="color: var(--text-muted);">Section des équipes en cours de développement...</p>
+            <p>Section en cours de développement...</p>
         </div>
 
         <!-- Section Joueurs -->
         <div class="content-card" id="section-joueurs">
             <div class="card-header">
                 <h3>Gestion des Joueurs</h3>
-                <a class="btn btn-primary" asp-controller="Admin" asp-action="AjouterMatch">➕ Ajouter un joueur</a>
+                <a class="btn btn-primary" asp-controller="Joueur" asp-action="Create">➕ Ajouter un joueur</a>
             </div>
-            <p style="color: var(--text-muted);">Section des joueurs en cours de développement...</p>
+            <p>Section en cours de développement...</p>
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-        <!-- Section Statistiques -->
-        <div class="content-card" id="section-statistiques">
-            <div class="card-header"><h3>Statistiques du Club</h3></div>
-            <p style="color: var(--text-muted);">Section des statistiques en cours de développement...</p>
-        </div>
-
-        <!-- Section Calendrier -->
-        <div class="content-card" id="section-calendrier">
-            <div class="card-header"><h3>Calendrier des Matchs</h3></div>
-            <p style="color: var(--text-muted);">Section du calendrier en cours de développement...</p>
-        </div>
-
-        <!-- Section Paramètres -->
-        <div class="content-card" id="section-parametres">
-            <div class="card-header"><h3>Paramètres du Système</h3></div>
-            <p style="color: var(--text-muted);">Section des paramètres en cours de développement...</p>
-        </div>
+        <!-- Autres sections -->
+        <div class="content-card" id="section-statistiques"><h3>Statistiques</h3></div>
+        <div class="content-card" id="section-calendrier"><h3>Calendrier</h3></div>
+        <div class="content-card" id="section-parametres"><h3>Paramètres</h3></div>
     </main>
 </div>
 
 @section Scripts {
-    <script>
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-        }
+<script>
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('active');
+    }
 
-        function switchSection(section) {
-            const sections = document.querySelectorAll('.content-card');
-            sections.forEach(s => s.classList.remove('active'));
-            document.getElementById('section-' + section).classList.add('active');
+    function switchSection(event, section) {
+    document.querySelectorAll('.content-card').forEach(s => s.classList.remove('active'));
+    document.getElementById('section-' + section).classList.add('active');
 
-            const menuItems = document.querySelectorAll('.menu-item');
-            menuItems.forEach(item => item.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+    document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+    event.currentTarget.classList.add('active');
 
-            if (window.innerWidth <= 768) {
-                document.getElementById('sidebar').classList.remove('active');
-            }
-        }
+    if (window.innerWidth <= 768)
+        document.getElementById('sidebar').classList.remove('active');
+}
 
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) document.getElementById('sidebar').classList.remove('active');
-        });
-
-        document.addEventListener('click', function(event) {
-            const sidebar = document.getElementById('sidebar');
-            const menuToggle = document.querySelector('.menu-toggle');
-            if (window.innerWidth <= 768 && sidebar.classList.contains('active') && !sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
-                sidebar.classList.remove('active');
-            }
-        });
-    </script>
+</script>
 }

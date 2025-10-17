@@ -1,0 +1,51 @@
+@model Jorfofbasket.Models.Match
+@{
+    ViewData["Title"] = "Modifier un match";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">✏️ Modifier le match</h2>
+
+    <form asp-action="Edit" method="post" class="mx-auto" style="max-width:600px;">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label asp-for="EquipeAdverse" class="form-label"></label>
+            <input asp-for="EquipeAdverse" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="DateMatch" class="form-label"></label>
+            <input asp-for="DateMatch" type="date" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Lieu" class="form-label"></label>
+            <input asp-for="Lieu" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ScoreEquipe" class="form-label"></label>
+            <input asp-for="ScoreEquipe" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ScoreAdverse" class="form-label"></label>
+            <input asp-for="ScoreAdverse" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Statut" class="form-label"></label>
+            <select asp-for="Statut" class="form-select">
+                <option>Prévu</option>
+                <option>Terminé</option>
+                <option>Reporté</option>
+            </select>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-warning">💾 Mettre à jour</button>
+            <a asp-action="Index" class="btn btn-secondary ms-2">↩️ Retour</a>
+        </div>
+    </form>
+</div>

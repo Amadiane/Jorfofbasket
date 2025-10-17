@@ -6,8 +6,17 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // --- Ajouter la DbContext ---
+// builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// --- Récupérer la chaîne de connexion ---
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Ajouter ApplicationDbContext avec SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(connectionString)
+           .EnableSensitiveDataLogging()   // Optionnel : pour voir les requêtes SQL
+           .LogTo(Console.WriteLine));     // Optionnel : affiche les requêtes dans la console
+
 
 // --- Ajouter Identity avec rôles et options de mot de passe ---
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>

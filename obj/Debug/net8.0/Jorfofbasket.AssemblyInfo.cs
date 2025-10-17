@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Jorfofbasket")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+21578f58ed7575dcd74ffc5882b2059e44fbe3b2")]
 [assembly: System.Reflection.AssemblyProductAttribute("Jorfofbasket")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Jorfofbasket")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

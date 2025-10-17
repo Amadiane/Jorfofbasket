@@ -11,10 +11,14 @@ namespace Jorfofbasket.Data
         {
         }
 
-        
-       
+        public DbSet<Match> Matches { get; set; } // 👈 ajout du modèle Match
         public DbSet<ContactMessage> ContactMessages { get; set; }
         public DbSet<Partner> Partners { get; set; }
-    
+
     }
 }
+
+
+
+
+        
